@@ -27,8 +27,6 @@
 
 	<script>
 
-
-
 		var raster = new ol.layer.Tile({
         source: new ol.source.OSM()
 		});
@@ -43,7 +41,7 @@
 				}),
 				stroke: new ol.style.Stroke({
 					color: '#ffcc3',
-					width:4
+					width:6
 				}),
 
 			})
@@ -55,15 +53,15 @@
 			target: 'map',
 			view: new ol.View({
 			center: ol.proj.transform([-4.49702, 48.39888], 'EPSG:4326', 'EPSG:3857'), //zoom sur l'UBO
-			zoom: 15
+			zoom:15
+			//zoom: 15
          })
        });
 
 
-	function dessin() {
 
 		var draw;
-
+    var modify ;
 		function addInteraction() {
 
 			var value= 'Circle';
@@ -74,9 +72,8 @@
 				}
 
 
-			//var point = coordinate[0]; //point de dÃ©part
- var point = coordinate[1];
-
+			var point = coordinate[1]; //point de dÃ©part
+//  var p2 = [10, 60];
 
             var radius = document.formu.distance.value; //taille des segments
 
@@ -92,13 +89,14 @@
                 var offsetY2 = radius * Math.cos(angle2); //dÃ©calage de Y
                 var offsetX2 = radius * Math.sin(angle2); //dÃ©calage de X
 
-    newCoordinates.push([point[0] + offsetX, point[1] + offsetY], [point[0], point[1]], [point[0] + offsetX2, point[1] + offsetY2], [point[0], point[1]]); //Calculs des coordonnÃ©es des points
+   newCoordinates.push([point[0] + offsetX, point[1] + offsetY], [point[0], point[1]], [point[0] + offsetX2, point[1] + offsetY2], [point[0], point[1]]); //Calculs des coordonnÃ©es des points
+		//newCoordinates.push([point[0], point[1] ]); //Calculs des coordonnÃ©es des points
 
 
                newCoordinates.push(newCoordinates[0].slice()); // slice renvoi une copie du tableau
                geometry.setCoordinates([newCoordinates, vector]);
                return geometry;
-             };
+             };// fin de la fonction
 
 			draw = new ol.interaction.Draw({
 			         source: source,
@@ -108,9 +106,12 @@
 
 		    map.addInteraction(draw);
 
+			
        }
-       addInteraction();
-	}
+			 function dessin() {
+
+       addInteraction(draw);
+	     }
 
     </script>
 
